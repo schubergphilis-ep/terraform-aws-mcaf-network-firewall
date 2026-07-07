@@ -1,7 +1,9 @@
 data "aws_caller_identity" "default" {}
 
 module "kms_key" {
-  source      = "github.com/schubergphilis/terraform-aws-mcaf-kms?ref=v0.2.0"
+  source  = "schubergphilis-ep/mcaf-kms/aws"
+  version = "~> 0.2.0"
+
   name        = "network-firewall"
   description = "KMS key used for encrypting flow and alert logs from network firewall"
   policy      = data.aws_iam_policy_document.kms_key_policy.json
