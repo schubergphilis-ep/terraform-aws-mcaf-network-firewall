@@ -54,8 +54,12 @@ locals {
 
   rules_string = [
     for key, rule in local.fqdn_rules_map : {
-      http = format("%s http $src_ip_%d any -> any $dst_prt_%s (http.host;dotprefix;content:\"%s\";endswith;flow:to_server,established;sid:1%d%d2;)", lower(rule.action), local.fqdn_rule_priority_to_index[rule.priority], local.fqdn_to_port_set_key[key], rule.fqdn, local.fqdn_rule_priority_to_index[rule.priority], key)
-      tls  = format("%s tls $src_ip_%d any -> any $dst_prt_%s (tls.sni;dotprefix;content:\"%s\";endswith;nocase;flow:to_server,established;sid:1%d%d1;)", lower(rule.action), local.fqdn_rule_priority_to_index[rule.priority], local.fqdn_to_port_set_key[key], rule.fqdn, local.fqdn_rule_priority_to_index[rule.priority], key)
+      # sid halves are zero-padded (not bare %d) so concatenating them stays
+      # injective as fqdn_rules grows - unpadded digits let two different
+      # (priority-index, key) pairs render to the same sid string once either
+      # value reaches double digits, e.g. 1+11+7+1 == 1+1+17+1 == "11171".
+      http = format("%s http $src_ip_%d any -> any $dst_prt_%s (http.host;dotprefix;content:\"%s\";endswith;flow:to_server,established;sid:1%03d%04d2;)", lower(rule.action), local.fqdn_rule_priority_to_index[rule.priority], local.fqdn_to_port_set_key[key], rule.fqdn, local.fqdn_rule_priority_to_index[rule.priority], key)
+      tls  = format("%s tls $src_ip_%d any -> any $dst_prt_%s (tls.sni;dotprefix;content:\"%s\";endswith;nocase;flow:to_server,established;sid:1%03d%04d1;)", lower(rule.action), local.fqdn_rule_priority_to_index[rule.priority], local.fqdn_to_port_set_key[key], rule.fqdn, local.fqdn_rule_priority_to_index[rule.priority], key)
     }
   ]
 
