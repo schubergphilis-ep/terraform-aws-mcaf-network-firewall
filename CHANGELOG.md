@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.1.1](https://github.com/schubergphilis-ep/terraform-aws-mcaf-network-firewall/compare/v2.1.0...v2.1.1) (2026-09-15)
+
+
+### 🐛 Fixes
+
+* pad fqdn rule sid digits to prevent signature collisions ([#3](https://github.com/schubergphilis-ep/terraform-aws-mcaf-network-firewall/issues/3)) ([885be25](https://github.com/schubergphilis-ep/terraform-aws-mcaf-network-firewall/commit/885be254a7f75af135edabbda0c26cf288d637b3))
+
 ## [2.1.0](https://github.com/schubergphilis-ep/terraform-aws-mcaf-network-firewall/compare/v2.0.1...v2.1.0) (2026-06-22)
 
 
@@ -68,4 +75,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### 🚀 Features
 
 * Initial module ([#1](https://github.com/schubergphilis/terraform-aws-mcaf-network-firewall/pull/1)) ([792f166](https://github.com/schubergphilis-ep/terraform-aws-mcaf-network-firewall/commit/792f16666a8c383617bd5d09917b3c1070677bcc))
-
